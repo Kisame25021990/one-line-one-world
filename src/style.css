@@ -14,3 +14,5 @@ p{color:#d2cde4;font-size:1.05rem;line-height:1.5}
 .dot-a{width:5px;height:5px;top:22%;left:25%}.dot-b{width:3px;height:3px;top:35%;right:20%}.dot-c{width:6px;height:6px;bottom:22%;right:31%}
 a{display:inline-block;margin-top:1.5rem;padding:.85rem 1.3rem;border:1px solid #a891d2;border-radius:999px;color:#fff;text-decoration:none}
 a:hover,a:focus-visible{background:#ddd0ff;color:#19142e}
+
+.contribution-star{position:absolute;border:0;background:transparent;font-size:1.5rem;cursor:pointer;transform:translate(-50%,-50%);text-shadow:0 0 12px currentColor}.contribution-star:hover,.contribution-star:focus-visible{outline:2px solid white;outline-offset:3px;border-radius:50%}#contribution-status{font-size:.85rem}

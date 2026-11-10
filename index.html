@@ -6,6 +6,8 @@
   <meta name="color-scheme" content="dark">
   <title>One Line, One World</title>
   <link rel="stylesheet" href="src/style.css">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://api.github.com https://raw.githubusercontent.com; object-src 'none'; base-uri 'none'">
+  <script src="src/schema.js" defer></script>
   <script src="src/experience.js" defer></script>
 </head>
 <body>
@@ -17,6 +19,7 @@
       <button class="star" type="button" aria-label="Faire briller l’étoile">✦</button>
       <span class="dot dot-a"></span><span class="dot dot-b"></span><span class="dot dot-c"></span>
     </div>
+    <p id="contribution-status" aria-live="polite">Chargement des étoiles de la communauté…</p>
     <p id="message" aria-live="polite">Touche l’étoile pour commencer.</p>
     <a href="https://github.com/Kisame25021990/one-line-one-world">Ajouter ta ligne sur GitHub ↗</a>
   </main>
