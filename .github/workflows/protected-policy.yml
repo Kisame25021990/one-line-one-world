@@ -1,0 +1,31 @@
+name: Protected contribution policy
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  protected-policy:
+    name: Protected contribution policy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check proposed change using trusted base workflow
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const vm = require('node:vm');
+            const {owner, repo} = context.repo;
+            const pr = context.payload.pull_request;
+            const maintenance = pr.user.login.toLowerCase() === owner.toLowerCase() && pr.head.repo && pr.head.repo.full_name.toLowerCase() === `${owner}/${repo}`.toLowerCase() && pr.head.ref.startsWith('maintenance/');
+            if (maintenance) { core.info('Owner maintenance branch: ordinary tests remain required.'); return; }
+            const files = await github.paginate(github.rest.pulls.listFiles, {owner, repo, pull_number: pr.number, per_page: 100});
+            const path = `contributions/${pr.user.login.toLowerCase()}.js`;
+            if (files.length !== 1 || files[0].filename !== path || files[0].status !== 'added' || files[0].additions !== 1 || files[0].deletions !== 0) { core.setFailed(`Add only one line in ${path}.`); return; }
+            const response = await github.rest.repos.getContent({owner: pr.head.repo.owner.login, repo: pr.head.repo.name, path, ref: pr.head.sha});
+            const item = response.data;
+            if (Array.isArray(item) || item.type !== 'file' || item.encoding !== 'base64' || typeof item.content !== 'string') { core.setFailed('Unable to inspect file.'); return; }
+            const content = Buffer.from(item.content, 'base64').toString('utf8');
+            if (Buffer.byteLength(content, 'utf8') > 512 || !/^[^\r\n]+\n?$/.test(content) || !content.trim()) { core.setFailed('Expected exactly one line of at most 512 bytes.'); return; }
+            try { new vm.Script(`(function(api){\n${content}\n})`, {filename: path}); }
+            catch (error) { core.setFailed(`Invalid JavaScript syntax: ${error.message}`); }

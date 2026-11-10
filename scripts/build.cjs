@@ -1,0 +1,12 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const root = path.resolve(__dirname, '..');
+const output = path.join(root, 'build');
+fs.mkdirSync(output, { recursive: true });
+fs.cpSync(path.join(root,'src'), path.join(output,'src'), { recursive: true });
+fs.copyFileSync(path.join(root,'index.html'), path.join(output,'index.html'));
+const folder=path.join(root,'contributions');
+const files=fs.readdirSync(folder).filter(x=>/^[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?\.js$/.test(x)).sort();
+const contributions=files.map(name=>({name:name.slice(0,-3), code:fs.readFileSync(path.join(folder,name),'utf8')}));
+fs.writeFileSync(path.join(output,'contributions.json'), JSON.stringify(contributions));
+console.log(`Built ${contributions.length} contributions in build/`);
