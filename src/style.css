@@ -1,0 +1,16 @@
+:root{font-family:system-ui,sans-serif;color:#f3f1ff;background:#0e1029}
+*{box-sizing:border-box}
+body{min-height:100vh;margin:0;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 15%,#382e66 0,#171737 38%,#0b1025 85%)}
+main{width:min(90vw,720px);padding:4rem 0;text-align:center}
+.eyebrow{color:#bdacf4;font-size:.72rem;letter-spacing:.2em;font-weight:700}
+h1{font-size:clamp(3rem,10vw,6rem);line-height:.99;letter-spacing:-.06em;margin:2rem 0 1rem}
+h1 em{font-style:normal;color:#ddbbff}
+p{color:#d2cde4;font-size:1.05rem;line-height:1.5}
+.sky{height:250px;position:relative;display:grid;place-items:center}
+.star{border:0;background:transparent;color:#f8e5ff;font-size:5rem;cursor:pointer;filter:drop-shadow(0 0 18px #bb86fa);transition:transform .3s,color .3s}
+.star:hover,.star:focus-visible{transform:scale(1.2) rotate(18deg);color:#fff}
+.star:focus-visible{outline:2px solid #fff;outline-offset:8px;border-radius:50%}
+.dot{position:absolute;border-radius:100%;background:#e9d8ff;box-shadow:0 0 14px #ddbbff}
+.dot-a{width:5px;height:5px;top:22%;left:25%}.dot-b{width:3px;height:3px;top:35%;right:20%}.dot-c{width:6px;height:6px;bottom:22%;right:31%}
+a{display:inline-block;margin-top:1.5rem;padding:.85rem 1.3rem;border:1px solid #a891d2;border-radius:999px;color:#fff;text-decoration:none}
+a:hover,a:focus-visible{background:#ddd0ff;color:#19142e}
