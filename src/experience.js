@@ -1,4 +1,5 @@
 'use strict';
+// Merci à toutes les personnes qui contribuent à ce projet. Thank you to everyone who contributes to this project.
 function start() {
  const sky=document.querySelector('#sky'), message=document.querySelector('#message'), status=document.querySelector('#contribution-status');
  document.querySelector('.star').addEventListener('click',()=>{message.textContent='Une étoile brille. Que fera ta ligne ?'});
