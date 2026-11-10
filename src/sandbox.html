@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval'; connect-src 'none'; img-src 'none'; media-src 'none'; form-action 'none'; base-uri 'none'"></head><body><script>
+'use strict';
+let started = false, onClick = null;
+const send = (type, data) => parent.postMessage({type, data}, '*');
+const api = Object.freeze({
+  star: (x,y,color,label) => send('star',{x,y,color,label}),
+  text: (x,y,text,color) => send('text',{x,y,text,color}),
+  message: text => send('message',{text}),
+  background: color => send('background',{color}),
+  onClick: callback => { if (typeof callback === 'function') onClick = callback; }
+});
+addEventListener('message', event => {
+  if (event.source !== parent || !event.data || typeof event.data !== 'object') return;
+  if (event.data.type === 'run' && !started && typeof event.data.code === 'string') {
+    started = true;
+    try { new Function('api', '"use strict";\n' + event.data.code)(api); send('ready',{}); }
+    catch (_) { send('error',{}); }
+  } else if (event.data.type === 'click' && onClick) {
+    try { onClick(); } catch (_) { send('error',{}); }
+  }
+});
+send('loaded',{});
+</script></body></html>

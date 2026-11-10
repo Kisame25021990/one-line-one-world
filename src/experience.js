@@ -1,40 +1,28 @@
 'use strict';
-
 function start() {
-  const star = document.querySelector('.star');
-  const message = document.querySelector('#message');
-  const sky = document.querySelector('#sky');
-  const status = document.querySelector('#contribution-status');
-  star.addEventListener('click', () => { message.textContent = 'Une étoile brille. Que fera ta ligne ?'; });
-
-  async function loadContributions() {
-    try {
-      const response = await fetch('https://api.github.com/repos/Kisame25021990/one-line-one-world/contents/contributions?ref=main', { headers: { Accept: 'application/vnd.github+json' } });
-      if (!response.ok) throw new Error('GitHub unavailable');
-      const entries = await response.json();
-      if (!Array.isArray(entries)) throw new Error('Invalid listing');
-      const files = entries.filter(e => e.type === 'file' && /^[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?\.js$/.test(e.name)).sort((a, b) => a.name.localeCompare(b.name));
-      let count = 0;
-      for (const entry of files.slice(0, 100)) {
-        try {
-          // Build URL ourselves: never fetch an arbitrary URL from the API response.
-          const url = 'https://raw.githubusercontent.com/Kisame25021990/one-line-one-world/main/contributions/' + encodeURIComponent(entry.name);
-          const result = await fetch(url);
-          if (!result.ok) continue;
-          const data = OneLineSchema.parse(await result.text());
-          const button = document.createElement('button');
-          button.type = 'button'; button.className = 'contribution-star';
-          button.style.left = data.x + '%'; button.style.top = data.y + '%'; button.style.color = data.color;
-          button.textContent = '✦'; button.setAttribute('aria-label', data.label);
-          button.addEventListener('click', () => { message.textContent = data.label; });
-          sky.appendChild(button); count++;
-        } catch (_) { /* One bad file cannot stop other stars. */ }
-      }
-      status.textContent = count ? `${count} étoile(s) de la communauté${files.length > 100 ? ' (100 premières affichées)' : ''}.` : 'Le ciel attend les premières contributions.';
-    } catch (_) {
-      status.textContent = 'Les étoiles de la communauté sont momentanément indisponibles. Le ciel de départ reste accessible.';
-    }
-  }
-  loadContributions();
+ const sky=document.querySelector('#sky'), message=document.querySelector('#message'), status=document.querySelector('#contribution-status');
+ document.querySelector('.star').addEventListener('click',()=>{message.textContent='Une étoile brille. Que fera ta ligne ?'});
+ const frames=new Map();
+ const color=x=>typeof x==='string' && /^#[0-9a-f]{6}$/i.test(x);
+ const coord=x=>Number.isFinite(x)&&x>=0&&x<=100;
+ const clean=x=>typeof x==='string'&&x.length>0&&x.length<=100&&!/[\u0000-\u001f\u007f]/.test(x);
+ addEventListener('message',e=>{
+  const state=frames.get(e.source); if(!state||!e.data||typeof e.data!=='object')return;
+  const {type,data}=e.data; if(!data||typeof data!=='object')return;
+  if(type==='loaded'){e.source.postMessage({type:'run',code:state.code},'*');return;}
+  if(type==='error'){state.frame.remove();frames.delete(e.source);return;}
+  if(state.actions++>=25)return;
+  if((type==='star'||type==='text')&&coord(data.x)&&coord(data.y)&&clean(type==='star'?data.label:data.text)&&color(data.color)){
+   const el=document.createElement('button');el.type='button';el.className='contribution-star';el.style.left=data.x+'%';el.style.top=data.y+'%';el.style.color=data.color;
+   el.textContent=type==='star'?'✦':data.text;el.setAttribute('aria-label',type==='star'?data.label:data.text);
+   el.addEventListener('click',()=>{if(type==='star')message.textContent=data.label;e.source.postMessage({type:'click'},'*')});sky.appendChild(el);
+  } else if(type==='message'&&clean(data.text))message.textContent=data.text;
+  else if(type==='background'&&color(data.color))sky.style.backgroundColor=data.color;
+ });
+ fetch('contributions.json').then(r=>{if(!r.ok)throw Error('manifest');return r.json()}).then(items=>{
+  if(!Array.isArray(items))throw Error('manifest');
+  status.textContent=items.length?`${items.length} contribution(s) de la communauté.`:'Le ciel attend les premières contributions.';
+  for(const item of items){if(!item||typeof item.code!=='string'||item.code.length>512)continue; const frame=document.createElement('iframe');frame.hidden=true;frame.setAttribute('sandbox','allow-scripts');frame.title='Contribution isolée';frame.src='src/sandbox.html';document.body.appendChild(frame);frames.set(frame.contentWindow,{frame,code:item.code,actions:0});}
+ }).catch(()=>{status.textContent='Contributions indisponibles. Lance la construction indiquée dans le README.'});
 }
 start();
