@@ -1,0 +1,1 @@
+for(let i=0;i<18;i++)api.star(8+i*5,Math.round(45+12*Math.sin(i*.6)),'#78E8C0','·');api.text(50,20,'Aurore boréale','#A8F5E0');api.onClick(()=>api.message('Une vague de lumière danse dans la nuit.')); // IA : gpt-6

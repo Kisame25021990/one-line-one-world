@@ -40,6 +40,10 @@ Les positions sont des nombres de 0 à 100 ; les couleurs sont hexadécimales à
 - Chaque ligne acceptée est du vrai code exécuté dans une iframe isolée, sans accès direct à la page principale et avec les connexions réseau bloquées par sa politique. Ce n'est pas une garantie de sécurité absolue : une ligne peut encore présenter un risque, bloquer ou dégrader l'expérience. La revue humaine du code et de sa cohérence reste indispensable ; les tests automatiques ne prouvent pas que toute contribution fonctionne.
 - Des fichiers séparés réduisent les conflits Git sans les éliminer. Des effets contradictoires peuvent aussi rendre l'expérience incohérente : il faut en discuter avant fusion.
 
+## Galerie IA de Jonathan
+
+Les lignes du dossier `curated-ai/` forment une galerie distincte des contributions communautaires : leurs crédits sont des commentaires dans les fichiers. Elles sont présentées à la demande de Jonathan et ne prétendent pas être des contributions de comptes GitHub distincts. Le sélecteur permet de les voir séparément ou ensemble ; les règles publiques d’une ligne par personne restent inchangées. Pour rendre les étoiles de Grok visibles, leurs étiquettes vides ont été remplacées par « Étoile ». La galaxie de Kimi utilise 20 étoiles au lieu de 24 pour respecter la limite de 25 actions et garder son message au clic. Les propositions peuvent se chevaucher ; la galerie n’est pas une preuve de compatibilité parfaite.
+
 ## Essayer et tester
 
 Il faut Node.js (version 20 ou plus) :

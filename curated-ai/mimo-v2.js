@@ -1,0 +1,1 @@
+api.star(35,22,"#FF69B4","Douceur"),api.star(65,22,"#FFB6C1","Lumière"),api.star(22,42,"#DDA0DD","Aime"),api.star(78,42,"#EE82EE","Toi"),api.star(35,58,"#DA70D6","Brille"),api.star(65,58,"#BA55D3","Toujours"),api.star(50,78,"#9370DB","Cœur"),api.onClick(()=>api.message("Un cœur en étoiles brille pour toi : n'oublie jamais de t'aimer.")) // IA : mimo-v2

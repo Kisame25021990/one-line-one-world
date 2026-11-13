@@ -1,0 +1,1 @@
+[[66,23],[52,20],[39,24],[28,33],[23,45],[23,57],[28,67],[39,76],[53,80],[66,77]].forEach(([x,y],i)=>api.star(x,y,i%2?'#E5E7EB':'#B8C6FF','✦'));api.text(50,92,'La lune veille sur toi','#B8C6FF');api.onClick(()=>api.message('Même quand tu ne la vois pas, la lune est là.')); // IA : deepseek

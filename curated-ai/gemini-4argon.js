@@ -1,0 +1,1 @@
+api.star(50,50,'#F5B041','●');for(let i=0;i<20;i++){const a=i*Math.PI/10;api.star(Math.round(50+28*Math.cos(a)),Math.round(50+7*Math.sin(a)-9*Math.cos(a)),i%2?'#FAD7A0':'#AED6F1','·')}api.star(84,30,'#FFF9D2','✦');api.text(50,82,'Saturne','#FAD7A0');api.onClick(()=>api.message('Autour de ce monde lointain, la poussière d’étoiles danse en silence.')); // IA : gemini-4argon

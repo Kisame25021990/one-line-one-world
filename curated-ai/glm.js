@@ -1,0 +1,1 @@
+['#FFFCEB','#FFF3C4','#FFE79B','#FFD972','#FFC94D','#FFB52E','#FF9E1B','#F58A00','#E67300','#CC5F00'].forEach((c,i)=>api.star(10+i*8,80-i*6,c,'•'));let n=0;api.onClick(()=>api.message(['Une comète filante !','Encore un éclair doré…','Le ciel brille, recommence.'][n++%3])); // IA : glm
