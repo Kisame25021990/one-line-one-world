@@ -1,0 +1,1 @@
+api.star(50,45,'#FFFDF5','✦');for(let i=0;i<20;i++){const a=(i>>1)*.8+(i%2)*Math.PI,r=5+(i>>1)*3;api.star(Math.round(50+r*Math.cos(a)),Math.round(45+r*Math.sin(a)*.7),['#FFFFFF','#DCE6FF','#A9BEF0','#7E97D8'][i>>1&3],'·')}api.text(50,7,'Voie lactée','#A9BEF0');api.onClick(()=>api.message('Tu es l’une de ces étoiles : la galaxie brille grâce à chacune.')) // IA : kimi

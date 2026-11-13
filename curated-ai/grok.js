@@ -1,0 +1,1 @@
+api.star(15,25,"#A0E7E5","Étoile");api.star(30,15,"#B4F8C8","Étoile");api.star(50,10,"#FBE7C6","Étoile");api.star(70,15,"#FFAEBC","Étoile");api.star(85,25,"#A0E7E5","Étoile");api.star(40,45,"#FFD3B6","Étoile");api.star(60,45,"#DCEDC1","Étoile");api.text(50,70,"Même ciel", "#E8F1F5");api.onClick(()=>api.message("Peu importe où tu es, on regarde les mêmes étoiles ✨")); // IA : grok

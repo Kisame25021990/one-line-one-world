@@ -1,0 +1,1 @@
+api.background('#0b0c2a'); api.star(20,30,'#ffd700','Étoile du Nord'); api.star(50,50,'#ffffff','Centre du ciel'); api.star(80,70,'#87cefa','Véga'); api.onClick(() => api.message('Fais un vœu ✨')); // IA : claude
